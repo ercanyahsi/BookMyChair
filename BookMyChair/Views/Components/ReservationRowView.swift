@@ -55,13 +55,15 @@ struct ReservationRowView: View {
             .font(.system(.callout, design: .rounded))
             .fontWeight(.medium)
             .foregroundColor(.white)
+            .lineLimit(1)
+            .fixedSize(horizontal: true, vertical: false)
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.accentColor)
             )
-            .frame(width: 70)
+            .frame(minWidth: 75)
     }
     
     // MARK: - Actions
