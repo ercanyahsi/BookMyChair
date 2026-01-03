@@ -28,6 +28,21 @@ struct ReservationRowView: View {
             }
             
             Spacer()
+            
+            // Call button
+            Button {
+                callCustomer()
+            } label: {
+                Image(systemName: "phone.fill")
+                    .font(.title3)
+                    .foregroundStyle(.white)
+                    .frame(width: 44, height: 44)
+                    .background(
+                        Circle()
+                            .fill(Color.green)
+                    )
+            }
+            .accessibilityLabel(NSLocalizedString("Call customer", comment: ""))
         }
         .padding(.vertical, 12)
         .accessibilityElement(children: .combine)
@@ -47,5 +62,18 @@ struct ReservationRowView: View {
                     .fill(Color.accentColor)
             )
             .frame(width: 70)
+    }
+    
+    // MARK: - Actions
+    
+    private func callCustomer() {
+        // Clean phone number (remove spaces, dashes, etc.)
+        let cleanedNumber = reservation.phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        
+        if let url = URL(string: "tel://\(cleanedNumber)") {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        }
     }
 }

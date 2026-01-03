@@ -148,6 +148,7 @@ struct ReservationListView: View {
                         .onTapGesture {
                             viewModel.editReservation(reservation)
                         }
+                        .buttonStyle(.plain) // Prevent button from inheriting list row tap
                 }
             }
             .onDelete(perform: deleteReservations)
