@@ -57,6 +57,24 @@ class ReservationEditorViewModel {
             self.phoneNumber = reservation.phoneNumber
             self.selectedHour = reservation.timeSlotHour
             self.selectedMinute = reservation.timeSlotMinute
+        } else {
+            // Set default time for new reservations: current time + 1 hour, minute = 0
+            let calendar = Calendar.current
+            let now = Date()
+            let currentHour = calendar.component(.hour, from: now)
+            
+            // Default to next hour (or 9 AM if calculated time is outside business hours)
+            var defaultHour = currentHour + 1
+            
+            // Ensure default hour is within business hours (8-21)
+            if defaultHour < 8 {
+                defaultHour = 9
+            } else if defaultHour > 21 {
+                defaultHour = 9
+            }
+            
+            self.selectedHour = defaultHour
+            self.selectedMinute = 0
         }
     }
     
