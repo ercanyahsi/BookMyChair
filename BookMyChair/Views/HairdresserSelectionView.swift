@@ -117,9 +117,10 @@ struct HairdresserSelectionView: View {
             // Welcome message with enhanced typography
             VStack(spacing: 14) {
                 Text(NSLocalizedString("Welcome to BookMyChair", comment: ""))
-                    .font(.system(.largeTitle, design: .rounded))
+                    .font(.system(.title, design: .rounded))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, 32)
                 
                 Text(NSLocalizedString("Manage your hairdressing appointments effortlessly", comment: ""))
