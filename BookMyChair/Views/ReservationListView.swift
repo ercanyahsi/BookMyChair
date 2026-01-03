@@ -22,7 +22,20 @@ struct ReservationListView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack {
+            // Subtle background gradient
+            LinearGradient(
+                colors: [
+                    Color(.systemBackground),
+                    Color.accentColor.opacity(0.02),
+                    Color(.systemBackground)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            VStack(spacing: 0) {
             // Date Picker
             datePicker
                 .padding(.horizontal)
@@ -35,6 +48,7 @@ struct ReservationListView: View {
                 emptyStateView
             } else {
                 reservationsList
+            }
             }
         }
         .navigationTitle(viewModel.hairdresser.name)
@@ -208,16 +222,6 @@ struct ReservationListView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            LinearGradient(
-                colors: [
-                    Color(.systemBackground),
-                    Color.accentColor.opacity(0.02)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        )
     }
     
     // MARK: - Reservations List

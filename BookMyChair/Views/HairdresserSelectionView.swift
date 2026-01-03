@@ -77,8 +77,48 @@ struct HairdresserSelectionView: View {
     // MARK: - Empty State
     
     private var emptyStateView: some View {
-        VStack(spacing: 0) {
-            Spacer()
+        ZStack {
+            // Background gradient layers
+            LinearGradient(
+                colors: [
+                    Color.accentColor.opacity(0.03),
+                    Color.clear,
+                    Color.accentColor.opacity(0.02)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            
+            // Decorative circles
+            GeometryReader { geometry in
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.accentColor.opacity(0.06), Color.clear],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 300, height: 300)
+                    .blur(radius: 60)
+                    .offset(x: geometry.size.width * 0.7, y: -100)
+                
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.accentColor.opacity(0.04), Color.clear],
+                            startPoint: .bottomLeading,
+                            endPoint: .topTrailing
+                        )
+                    )
+                    .frame(width: 250, height: 250)
+                    .blur(radius: 50)
+                    .offset(x: -50, y: geometry.size.height * 0.6)
+            }
+            
+            VStack(spacing: 0) {
+                Spacer()
             
             // App icon with gradient and animation
             ZStack {
@@ -184,9 +224,9 @@ struct HairdresserSelectionView: View {
             .padding(.horizontal, 32)
             
             Spacer()
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(.systemGroupedBackground))
     }
     
     // MARK: - Hairdresser List
