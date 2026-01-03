@@ -1,0 +1,38 @@
+/* Hairdresser Selection */
+"hairdresser_selection_title" = "Kuaför Seç";
+"hairdresser_selection_create" = "Kuaför Oluştur";
+"hairdresser_name_placeholder" = "Kuaför Adı";
+"create_button" = "Oluştur";
+"cancel_button" = "İptal";
+
+/* Reservation List */
+"today" = "Bugün";
+"tomorrow" = "Yarın";
+"add_reservation" = "Randevu Ekle";
+"no_reservations" = "Randevu yok";
+"reservations_title" = "Randevular";
+
+/* Reservation Editor */
+"new_reservation" = "Yeni Randevu";
+"edit_reservation" = "Randevuyu Düzenle";
+"customer_name" = "Müşteri Adı";
+"phone_number" = "Telefon Numarası";
+"select_time" = "Saat Seç";
+"hour" = "Saat";
+"minute" = "Dakika";
+"save_button" = "Kaydet";
+"delete_button" = "Sil";
+
+/* Alerts */
+"error" = "Hata";
+"ok_button" = "Tamam";
+"delete_confirmation_title" = "Randevuyu Sil";
+"delete_confirmation_message" = "Bu randevuyu silmek istediğinizden emin misiniz?";
+"conflict_title" = "Zaman Çakışması";
+"conflict_message" = "Bu saat dilimi zaten rezerve edilmiş. Lütfen farklı bir saat seçin.";
+"validation_error" = "Doğrulama Hatası";
+"empty_name_error" = "Müşteri adı boş olamaz";
+"empty_phone_error" = "Telefon numarası boş olamaz";
+
+/* Time Display */
+"time_format" = "%d:%02d";

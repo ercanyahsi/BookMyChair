@@ -1,0 +1,38 @@
+/* Hairdresser Selection */
+"hairdresser_selection_title" = "Select Hairdresser";
+"hairdresser_selection_create" = "Create Hairdresser";
+"hairdresser_name_placeholder" = "Hairdresser Name";
+"create_button" = "Create";
+"cancel_button" = "Cancel";
+
+/* Reservation List */
+"today" = "Today";
+"tomorrow" = "Tomorrow";
+"add_reservation" = "Add Reservation";
+"no_reservations" = "No reservations";
+"reservations_title" = "Reservations";
+
+/* Reservation Editor */
+"new_reservation" = "New Reservation";
+"edit_reservation" = "Edit Reservation";
+"customer_name" = "Customer Name";
+"phone_number" = "Phone Number";
+"select_time" = "Select Time";
+"hour" = "Hour";
+"minute" = "Minute";
+"save_button" = "Save";
+"delete_button" = "Delete";
+
+/* Alerts */
+"error" = "Error";
+"ok_button" = "OK";
+"delete_confirmation_title" = "Delete Reservation";
+"delete_confirmation_message" = "Are you sure you want to delete this reservation?";
+"conflict_title" = "Time Conflict";
+"conflict_message" = "This time slot is already reserved. Please choose a different time.";
+"validation_error" = "Validation Error";
+"empty_name_error" = "Customer name cannot be empty";
+"empty_phone_error" = "Phone number cannot be empty";
+
+/* Time Display */
+"time_format" = "%d:%02d";

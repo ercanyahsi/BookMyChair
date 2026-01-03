@@ -6,19 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
+/// Root content view of the application
 struct ContentView: View {
+    let dataStore: AppDataStore
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        HairdresserSelectionView(dataStore: dataStore)
     }
-}
-
-#Preview {
-    ContentView()
 }
