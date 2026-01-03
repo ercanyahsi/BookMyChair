@@ -119,8 +119,8 @@ struct HairdresserSelectionView: View {
                 Text(NSLocalizedString("Welcome to BookMyChair", comment: ""))
                     .font(.system(.largeTitle, design: .rounded))
                     .fontWeight(.bold)
-                    .tracking(-0.5)
                     .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
                 
                 Text(NSLocalizedString("Manage your hairdressing appointments effortlessly", comment: ""))
                     .font(.title3)
