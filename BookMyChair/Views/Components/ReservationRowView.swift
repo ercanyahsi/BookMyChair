@@ -7,25 +7,57 @@
 
 import SwiftUI
 
+/// Status of a reservation relative to current time
+enum ReservationStatus {
+    case completed  // Past appointment
+    case current    // Currently active appointment
+    case upcoming   // Future appointment
+}
+
 /// Component view for displaying a reservation in a list
 struct ReservationRowView: View {
     let reservation: Reservation
+    var status: ReservationStatus = .upcoming
     
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
-            // Time badge
+            // Time badge with status indicator
             timeBadge
             
             // Customer information
             VStack(alignment: .leading, spacing: 6) {
-                Text(reservation.customerName)
-                    .font(.title3)
-                    .fontWeight(.semibold)
+                HStack(spacing: 8) {
+                    Text(reservation.customerName)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                    
+                    // NOW badge for current appointment
+                    if status == .current {
+                        Text("NOW")
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 3)
+                            .background(
+                                Capsule()
+                                    .fill(Color.green)
+                            )
+                    }
+                    
+                    // Checkmark for completed appointments
+                    if status == .completed {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.caption)
+                            .foregroundStyle(.green)
+                    }
+                }
                 
                 Text(reservation.phoneNumber)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
+            .opacity(status == .completed ? 0.5 : 1.0)
             
             Spacer()
             
@@ -45,6 +77,15 @@ struct ReservationRowView: View {
             .accessibilityLabel(NSLocalizedString("Call customer", comment: ""))
         }
         .padding(.vertical, 12)
+        .padding(.horizontal, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(status == .current ? Color.green.opacity(0.08) : Color.clear)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(status == .current ? Color.green.opacity(0.3) : Color.clear, lineWidth: 2)
+        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(reservation.formattedTime), \(reservation.customerName)")
         .accessibilityHint(NSLocalizedString("Tap to edit reservation", comment: ""))
@@ -61,7 +102,7 @@ struct ReservationRowView: View {
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.accentColor)
+                    .fill(status == .current ? Color.green : (status == .completed ? Color.secondary : Color.accentColor))
             )
             .frame(minWidth: 75)
     }
