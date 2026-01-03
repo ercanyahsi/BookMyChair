@@ -150,18 +150,8 @@ struct ReservationEditorView: View {
                         Button(role: .destructive) {
                             viewModel.confirmDelete()
                         } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "trash.fill")
-                                    .font(.system(size: 16, weight: .semibold))
-                                Text(NSLocalizedString("delete_button", comment: ""))
-                                    .fontWeight(.semibold)
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.red.opacity(0.1))
-                            )
+                            Label(NSLocalizedString("delete_button", comment: ""), systemImage: "trash.fill")
+                                .fontWeight(.semibold)
                         }
                     }
                 }
