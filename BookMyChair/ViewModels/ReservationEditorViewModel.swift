@@ -60,9 +60,9 @@ class ReservationEditorViewModel {
         }
     }
     
-    /// Available hours (0-23)
+    /// Available hours (8-21 for business hours)
     var availableHours: [Int] {
-        Array(0...23)
+        Array(8...21)
     }
     
     /// Available minutes (0, 30)
