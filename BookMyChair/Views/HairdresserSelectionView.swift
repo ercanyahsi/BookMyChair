@@ -45,12 +45,14 @@ struct HairdresserSelectionView: View {
     
     private var emptyStateView: some View {
         VStack(spacing: 20) {
-            Image(systemName: "person.2")
-                .font(.system(size: 60))
+            Image(systemName: "scissors")
+                .font(.system(size: 64))
                 .foregroundColor(.secondary)
+                .symbolRenderingMode(.hierarchical)
             
             Text(NSLocalizedString("hairdresser_selection_title", comment: ""))
                 .font(.title2)
+                .fontWeight(.semibold)
                 .multilineTextAlignment(.center)
             
             Button {
@@ -145,14 +147,18 @@ struct HairdresserRowView: View {
     let hairdresser: Hairdresser
     
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             Image(systemName: "person.circle.fill")
                 .font(.title2)
                 .foregroundColor(.accentColor)
+                .symbolRenderingMode(.hierarchical)
             
             Text(hairdresser.name)
-                .font(.headline)
+                .font(.body)
+                .fontWeight(.medium)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 8)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(hairdresser.name)
     }
 }

@@ -23,8 +23,10 @@ struct ReservationListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Date Toggle
-            dateToggle
+            // Date Picker
+            datePicker
+                .padding(.horizontal)
+                .padding(.vertical, 12)
             
             Divider()
             
@@ -44,6 +46,7 @@ struct ReservationListView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .accessibilityLabel(NSLocalizedString("Add new reservation", comment: ""))
             }
         }
         .sheet(isPresented: $viewModel.showingEditor, onDismiss: {
@@ -70,48 +73,46 @@ struct ReservationListView: View {
         }
     }
     
-    // MARK: - Date Toggle
+    // MARK: - Date Picker
     
-    private var dateToggle: some View {
-        HStack(spacing: 0) {
-            Button {
-                viewModel.showToday()
-            } label: {
-                Text(NSLocalizedString("today", comment: ""))
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(viewModel.isShowingToday ? Color.accentColor : Color.clear)
-                    .foregroundColor(viewModel.isShowingToday ? .white : .primary)
+    private var datePicker: some View {
+        Picker("", selection: Binding(
+            get: { viewModel.isShowingToday ? 0 : 1 },
+            set: { newValue in
+                if newValue == 0 {
+                    viewModel.showToday()
+                } else {
+                    viewModel.showTomorrow()
+                }
             }
-            
-            Divider()
-            
-            Button {
-                viewModel.showTomorrow()
-            } label: {
-                Text(NSLocalizedString("tomorrow", comment: ""))
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(viewModel.isShowingTomorrow ? Color.accentColor : Color.clear)
-                    .foregroundColor(viewModel.isShowingTomorrow ? .white : .primary)
-            }
+        )) {
+            Text(NSLocalizedString("today", comment: "")).tag(0)
+            Text(NSLocalizedString("tomorrow", comment: "")).tag(1)
         }
-        .background(Color(uiColor: .systemBackground))
+        .pickerStyle(.segmented)
+        .labelsHidden()
     }
     
     // MARK: - Empty State
     
     private var emptyStateView: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "calendar")
-                .font(.system(size: 60))
-                .foregroundColor(.secondary)
+        VStack(spacing: 20) {
+            Spacer()
             
-            Text(NSLocalizedString("no_reservations", comment: ""))
-                .font(.headline)
+            Image(systemName: "calendar.badge.clock")
+                .font(.system(size: 64))
                 .foregroundColor(.secondary)
+                .symbolRenderingMode(.hierarchical)
+            
+            VStack(spacing: 8) {
+                Text(NSLocalizedString("no_reservations", comment: ""))
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                
+                Text(viewModel.dateDisplayTitle)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
             
             Button {
                 viewModel.addReservation()
@@ -120,8 +121,13 @@ struct ReservationListView: View {
                     NSLocalizedString("add_reservation", comment: ""),
                     systemImage: "plus.circle.fill"
                 )
+                .font(.headline)
             }
             .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .padding(.top, 8)
+            
+            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

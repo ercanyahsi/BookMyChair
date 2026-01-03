@@ -53,18 +53,37 @@ struct ReservationEditorView: View {
                 }
                 
                 // Time Selection
-                Section(NSLocalizedString("select_time", comment: "")) {
-                    Picker(NSLocalizedString("hour", comment: ""), selection: $viewModel.selectedHour) {
-                        ForEach(viewModel.availableHours, id: \.self) { hour in
-                            Text("\(hour)").tag(hour)
+                Section {
+                    HStack {
+                        Text(NSLocalizedString("select_time", comment: ""))
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                        
+                        HStack(spacing: 4) {
+                            Picker("", selection: $viewModel.selectedHour) {
+                                ForEach(viewModel.availableHours, id: \.self) { hour in
+                                    Text("\(hour)").tag(hour)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .labelsHidden()
+                            
+                            Text(":")
+                                .foregroundColor(.secondary)
+                            
+                            Picker("", selection: $viewModel.selectedMinute) {
+                                ForEach(viewModel.availableMinutes, id: \.self) { minute in
+                                    Text(String(format: "%02d", minute)).tag(minute)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .labelsHidden()
                         }
+                        .font(.title3.monospacedDigit())
                     }
-                    
-                    Picker(NSLocalizedString("minute", comment: ""), selection: $viewModel.selectedMinute) {
-                        ForEach(viewModel.availableMinutes, id: \.self) { minute in
-                            Text(String(format: "%02d", minute)).tag(minute)
-                        }
-                    }
+                } header: {
+                    Text(NSLocalizedString("Appointment Time", comment: ""))
                 }
                 
                 // Error Display
@@ -72,22 +91,7 @@ struct ReservationEditorView: View {
                     Section {
                         Text(errorMessage)
                             .foregroundColor(.red)
-                            .font(.caption)
-                    }
-                }
-                
-                // Delete Button (only when editing)
-                if viewModel.isEditing {
-                    Section {
-                        Button(role: .destructive) {
-                            viewModel.confirmDelete()
-                        } label: {
-                            HStack {
-                                Spacer()
-                                Text(NSLocalizedString("delete_button", comment: ""))
-                                Spacer()
-                            }
-                        }
+                            .font(.callout)
                     }
                 }
             }
@@ -100,10 +104,21 @@ struct ReservationEditorView: View {
                     }
                 }
                 
+                if viewModel.isEditing {
+                    ToolbarItem(placement: .bottomBar) {
+                        Button(role: .destructive) {
+                            viewModel.confirmDelete()
+                        } label: {
+                            Label(NSLocalizedString("delete_button", comment: ""), systemImage: "trash")
+                        }
+                    }
+                }
+                
                 ToolbarItem(placement: .confirmationAction) {
                     Button(NSLocalizedString("save_button", comment: "")) {
                         viewModel.save()
                     }
+                    .fontWeight(.semibold)
                     .disabled(viewModel.customerName.isEmpty || viewModel.phoneNumber.isEmpty)
                 }
             }

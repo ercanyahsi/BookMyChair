@@ -17,37 +17,30 @@ struct ReservationRowView: View {
             timeBadge
             
             // Customer information
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(reservation.customerName)
-                    .font(.headline)
+                    .font(.title3)
+                    .fontWeight(.semibold)
                 
-                HStack(spacing: 6) {
-                    Image(systemName: "phone.fill")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    
-                    Text(reservation.phoneNumber)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
+                Text(reservation.phoneNumber)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
             }
             
             Spacer()
-            
-            // Chevron
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.secondary)
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 12)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(reservation.formattedTime), \(reservation.customerName)")
+        .accessibilityHint(NSLocalizedString("Tap to edit reservation", comment: ""))
     }
     
     private var timeBadge: some View {
         Text(reservation.formattedTime)
-            .font(.system(.body, design: .rounded))
-            .fontWeight(.semibold)
+            .font(.system(.callout, design: .rounded))
+            .fontWeight(.medium)
             .foregroundColor(.white)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 10)
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
