@@ -45,6 +45,8 @@
 "ok_button" = "OK";
 "delete_confirmation_title" = "Delete Reservation";
 "delete_confirmation_message" = "Are you sure you want to delete this reservation?";
+"delete_hairdresser_title" = "Delete Hairdresser";
+"delete_hairdresser_message" = "Are you sure you want to delete %@? All associated appointments will be permanently deleted.";
 "conflict_title" = "Time Conflict";
 "conflict_message" = "This time slot is already reserved. Please choose a different time.";
 "validation_error" = "Validation Error";

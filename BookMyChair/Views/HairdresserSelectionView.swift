@@ -11,6 +11,8 @@ import SwiftUI
 struct HairdresserSelectionView: View {
     @State private var viewModel: HairdresserSelectionViewModel
     @State private var selectedHairdresser: Hairdresser?
+    @State private var hairdresserToDelete: Hairdresser?
+    @State private var showingDeleteAlert = false
     
     init(dataStore: AppDataStore) {
         _viewModel = State(wrappedValue: HairdresserSelectionViewModel(dataStore: dataStore))
@@ -53,6 +55,21 @@ struct HairdresserSelectionView: View {
             }
             .sheet(isPresented: $viewModel.showingCreateSheet) {
                 createHairdresserSheet
+            }
+            .alert(
+                NSLocalizedString("delete_hairdresser_title", comment: ""),
+                isPresented: $showingDeleteAlert,
+                presenting: hairdresserToDelete
+            ) { hairdresser in
+                Button(NSLocalizedString("cancel_button", comment: ""), role: .cancel) {
+                    hairdresserToDelete = nil
+                }
+                Button(NSLocalizedString("delete_button", comment: ""), role: .destructive) {
+                    viewModel.deleteHairdresser(hairdresser)
+                    hairdresserToDelete = nil
+                }
+            } message: { hairdresser in
+                Text(String(format: NSLocalizedString("delete_hairdresser_message", comment: ""), hairdresser.name))
             }
         }
     }
@@ -250,10 +267,9 @@ struct HairdresserSelectionView: View {
     // MARK: - Actions
     
     private func deleteHairdressers(at offsets: IndexSet) {
-        for index in offsets {
-            let hairdresser = viewModel.hairdressers[index]
-            viewModel.deleteHairdresser(hairdresser)
-        }
+        guard let index = offsets.first else { return }
+        hairdresserToDelete = viewModel.hairdressers[index]
+        showingDeleteAlert = true
     }
 }
 
