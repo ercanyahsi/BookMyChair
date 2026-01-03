@@ -47,6 +47,7 @@
 "delete_confirmation_message" = "Bu randevuyu silmek istediğinizden emin misiniz?";"delete_hairdresser_title" = "Kuaförü Sil";
 "delete_hairdresser_message" = "%@ kuaförünü silmek istediğinizden emin misiniz? Tüm ilişkili randevular kalıcı olarak silinecektir.";"conflict_title" = "Zaman Çakışması";
 "conflict_message" = "Bu saat dilimi zaten rezerve edilmiş. Lütfen farklı bir saat seçin.";
+"past_time_error" = "Geçmiş bir zaman için randevu oluşturulamaz. Lütfen gelecek bir zaman seçin.";
 "validation_error" = "Doğrulama Hatası";
 "empty_name_error" = "Müşteri adı boş olamaz";
 "empty_phone_error" = "Telefon numarası boş olamaz";

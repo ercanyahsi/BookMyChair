@@ -62,12 +62,51 @@ class ReservationEditorViewModel {
     
     /// Available hours (8-21 for business hours)
     var availableHours: [Int] {
-        Array(8...21)
+        let allHours = Array(8...21)
+        
+        // If date is today, filter out past hours
+        if Calendar.current.isDateInToday(date) {
+            let now = Date()
+            let calendar = Calendar.current
+            let currentHour = calendar.component(.hour, from: now)
+            let currentMinute = calendar.component(.minute, from: now)
+            
+            return allHours.filter { hour in
+                // Include hours greater than current hour
+                if hour > currentHour {
+                    return true
+                }
+                // For current hour, only include if we can still book 30-min slot
+                if hour == currentHour && currentMinute < 30 {
+                    return true
+                }
+                return false
+            }
+        }
+        
+        return allHours
     }
     
     /// Available minutes (0, 30)
     var availableMinutes: [Int] {
-        [0, 30]
+        // If date is today and selected hour is current hour, filter past minutes
+        if Calendar.current.isDateInToday(date) {
+            let now = Date()
+            let calendar = Calendar.current
+            let currentHour = calendar.component(.hour, from: now)
+            let currentMinute = calendar.component(.minute, from: now)
+            
+            if selectedHour == currentHour {
+                // Only show :30 if current time is before :30
+                if currentMinute < 30 {
+                    return [30]
+                } else {
+                    return [] // No available minutes for this hour
+                }
+            }
+        }
+        
+        return [0, 30]
     }
     
     /// Validate and save the reservation
@@ -81,6 +120,19 @@ class ReservationEditorViewModel {
         if !validationErrors.isEmpty {
             errorMessage = validationErrors.joined(separator: "\n")
             return
+        }
+        
+        // Validate time is not in the past
+        if Calendar.current.isDateInToday(date) {
+            let now = Date()
+            let calendar = Calendar.current
+            let currentHour = calendar.component(.hour, from: now)
+            let currentMinute = calendar.component(.minute, from: now)
+            
+            if selectedHour < currentHour || (selectedHour == currentHour && selectedMinute <= currentMinute) {
+                errorMessage = NSLocalizedString("past_time_error", comment: "")
+                return
+            }
         }
         
         let timeSlot = TimeSlot(hour: selectedHour, minute: selectedMinute)

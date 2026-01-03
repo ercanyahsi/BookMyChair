@@ -49,6 +49,7 @@
 "delete_hairdresser_message" = "Are you sure you want to delete %@? All associated appointments will be permanently deleted.";
 "conflict_title" = "Time Conflict";
 "conflict_message" = "This time slot is already reserved. Please choose a different time.";
+"past_time_error" = "Cannot create reservation for a past time. Please select a future time.";
 "validation_error" = "Validation Error";
 "empty_name_error" = "Customer name cannot be empty";
 "empty_phone_error" = "Phone number cannot be empty";
