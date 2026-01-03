@@ -44,41 +44,110 @@ struct HairdresserSelectionView: View {
     // MARK: - Empty State
     
     private var emptyStateView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "scissors")
-                .font(.system(size: 64))
-                .foregroundColor(.secondary)
-                .symbolRenderingMode(.hierarchical)
+        VStack(spacing: 0) {
+            Spacer()
             
-            Text(NSLocalizedString("hairdresser_selection_title", comment: ""))
-                .font(.title2)
-                .fontWeight(.semibold)
-                .multilineTextAlignment(.center)
+            // App icon/logo representation
+            ZStack {
+                Circle()
+                    .fill(Color.accentColor.opacity(0.1))
+                    .frame(width: 120, height: 120)
+                
+                Image(systemName: "scissors.circle.fill")
+                    .font(.system(size: 72))
+                    .foregroundStyle(Color.accentColor)
+                    .symbolRenderingMode(.hierarchical)
+            }
+            .padding(.bottom, 32)
             
+            // Welcome message
+            VStack(spacing: 12) {
+                Text("Welcome to BookMyChair")
+                    .font(.system(.title, design: .rounded))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                
+                Text("Manage your hairdressing appointments effortlessly")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+            }
+            .padding(.bottom, 40)
+            
+            // Feature highlights
+            VStack(alignment: .leading, spacing: 20) {
+                FeatureRow(
+                    icon: "person.crop.circle.badge.plus",
+                    title: "Add Hairdressers",
+                    description: "Create profiles for each stylist"
+                )
+                
+                FeatureRow(
+                    icon: "calendar.badge.clock",
+                    title: "Schedule Appointments",
+                    description: "Book and track daily reservations"
+                )
+                
+                FeatureRow(
+                    icon: "phone.circle.fill",
+                    title: "Quick Contact",
+                    description: "Call customers with one tap"
+                )
+            }
+            .padding(.horizontal, 32)
+            .padding(.bottom, 40)
+            
+            // Call to action
             Button {
                 viewModel.showingCreateSheet = true
             } label: {
-                Label(
-                    NSLocalizedString("hairdresser_selection_create", comment: ""),
-                    systemImage: "plus.circle.fill"
-                )
-                .font(.headline)
+                HStack(spacing: 12) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title3)
+                    Text("Add Your First Hairdresser")
+                        .fontWeight(.semibold)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(Color.accentColor)
+                .foregroundStyle(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
             }
-            .buttonStyle(.borderedProminent)
+            .padding(.horizontal, 32)
+            .shadow(color: Color.accentColor.opacity(0.3), radius: 10, y: 5)
+            
+            Spacer()
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemGroupedBackground))
     }
     
     // MARK: - Hairdresser List
     
     private var hairdresserListView: some View {
-        List {
-            ForEach(viewModel.hairdressers, id: \.id) { hairdresser in
-                NavigationLink(value: hairdresser) {
-                    HairdresserRowView(hairdresser: hairdresser)
-                }
+        VStack(spacing: 0) {
+            // Header info
+            VStack(spacing: 8) {
+                Text("Select a hairdresser to view their schedule")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
             }
-            .onDelete(perform: deleteHairdressers)
+            .padding(.vertical, 16)
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemGroupedBackground))
+            
+            List {
+                ForEach(viewModel.hairdressers, id: \.id) { hairdresser in
+                    NavigationLink(value: hairdresser) {
+                        HairdresserRowView(hairdresser: hairdresser)
+                    }
+                }
+                .onDelete(perform: deleteHairdressers)
+            }
+            .listStyle(.plain)
         }
         .navigationDestination(for: Hairdresser.self) { hairdresser in
             ReservationListView(
@@ -142,23 +211,75 @@ struct HairdresserSelectionView: View {
 
 // MARK: - Supporting Views
 
+/// Feature row for empty state
+struct FeatureRow: View {
+    let icon: String
+    let title: String
+    let description: String
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundStyle(Color.accentColor)
+                .symbolRenderingMode(.hierarchical)
+                .frame(width: 32)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                
+                Text(description)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
+            Spacer()
+        }
+    }
+}
+
 /// Row view for displaying a hairdresser
 struct HairdresserRowView: View {
     let hairdresser: Hairdresser
     
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "person.circle.fill")
-                .font(.title2)
-                .foregroundColor(.accentColor)
-                .symbolRenderingMode(.hierarchical)
+        HStack(spacing: 16) {
+            // Avatar circle
+            ZStack {
+                Circle()
+                    .fill(Color.accentColor.opacity(0.15))
+                    .frame(width: 56, height: 56)
+                
+                Image(systemName: "person.fill")
+                    .font(.title2)
+                    .foregroundStyle(Color.accentColor)
+            }
             
-            Text(hairdresser.name)
-                .font(.body)
-                .fontWeight(.medium)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(hairdresser.name)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar.badge.clock")
+                        .font(.caption)
+                    Text("View Schedule")
+                        .font(.caption)
+                }
+                .foregroundStyle(.secondary)
+            }
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 12)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(hairdresser.name)
+        .accessibilityHint("Tap to view schedule")
     }
 }
