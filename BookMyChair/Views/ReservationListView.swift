@@ -93,13 +93,19 @@ struct ReservationListView: View {
     
     private var datePicker: some View {
         VStack(spacing: 12) {
-            // Date display
-            Text(viewModel.dateDisplayTitle)
-                .font(.system(.subheadline, design: .rounded))
-                .fontWeight(.semibold)
-                .foregroundStyle(.secondary)
-                .textCase(.uppercase)
-                .tracking(1.2)
+            // Date display with actual date
+            VStack(spacing: 4) {
+                Text(viewModel.dateDisplayTitle)
+                    .font(.system(.subheadline, design: .rounded))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .tracking(1.2)
+                
+                Text(viewModel.formattedDate)
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(.tertiary)
+            }
             
             Picker("", selection: Binding(
                 get: { viewModel.isShowingToday ? 0 : 1 },

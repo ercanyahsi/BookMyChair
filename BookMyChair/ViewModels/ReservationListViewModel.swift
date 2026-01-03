@@ -59,6 +59,11 @@ class ReservationListViewModel {
         DateHelpers.displayString(for: selectedDate)
     }
     
+    /// Get formatted date string (e.g., "January 3, 2026")
+    var formattedDate: String {
+        DateHelpers.formatDate(selectedDate, style: .long)
+    }
+    
     /// Present the editor for a new reservation
     func addReservation() {
         editingReservation = nil
