@@ -44,8 +44,24 @@ struct ReservationListView: View {
                 Button {
                     viewModel.addReservation()
                 } label: {
-                    Image(systemName: "plus")
+                    ZStack {
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .frame(width: 32, height: 32)
+                            .shadow(color: Color.accentColor.opacity(0.3), radius: 4, y: 2)
+                        
+                        Image(systemName: "plus")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundStyle(.white)
+                    }
                 }
+                .buttonStyle(.plain)
                 .accessibilityLabel(NSLocalizedString("Add new reservation", comment: ""))
             }
         }
@@ -76,60 +92,126 @@ struct ReservationListView: View {
     // MARK: - Date Picker
     
     private var datePicker: some View {
-        Picker("", selection: Binding(
-            get: { viewModel.isShowingToday ? 0 : 1 },
-            set: { newValue in
-                if newValue == 0 {
-                    viewModel.showToday()
-                } else {
-                    viewModel.showTomorrow()
+        VStack(spacing: 12) {
+            // Date display
+            Text(viewModel.dateDisplayTitle)
+                .font(.system(.subheadline, design: .rounded))
+                .fontWeight(.semibold)
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+                .tracking(1.2)
+            
+            Picker("", selection: Binding(
+                get: { viewModel.isShowingToday ? 0 : 1 },
+                set: { newValue in
+                    if newValue == 0 {
+                        viewModel.showToday()
+                    } else {
+                        viewModel.showTomorrow()
+                    }
                 }
+            )) {
+                Text(NSLocalizedString("today", comment: "")).tag(0)
+                Text(NSLocalizedString("tomorrow", comment: "")).tag(1)
             }
-        )) {
-            Text(NSLocalizedString("today", comment: "")).tag(0)
-            Text(NSLocalizedString("tomorrow", comment: "")).tag(1)
+            .pickerStyle(.segmented)
+            .labelsHidden()
         }
-        .pickerStyle(.segmented)
-        .labelsHidden()
+        .padding(.vertical, 16)
+        .background(
+            LinearGradient(
+                colors: [Color.accentColor.opacity(0.05), Color.clear],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
     }
     
     // MARK: - Empty State
     
     private var emptyStateView: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 0) {
             Spacer()
             
-            Image(systemName: "calendar.badge.clock")
-                .font(.system(size: 64))
-                .foregroundColor(.secondary)
-                .symbolRenderingMode(.hierarchical)
+            // Icon with gradient background
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.accentColor.opacity(0.15),
+                                Color.accentColor.opacity(0.05)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 120, height: 120)
+                
+                Image(systemName: "calendar.badge.clock")
+                    .font(.system(size: 56))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.accentColor, Color.accentColor.opacity(0.7)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .symbolRenderingMode(.hierarchical)
+            }
+            .padding(.bottom, 32)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 12) {
                 Text(NSLocalizedString("no_reservations", comment: ""))
-                    .font(.title3)
-                    .fontWeight(.semibold)
+                    .font(.system(.title2, design: .rounded))
+                    .fontWeight(.bold)
                 
                 Text(viewModel.dateDisplayTitle)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 32)
+                    .multilineTextAlignment(.center)
             }
+            .padding(.bottom, 32)
             
             Button {
                 viewModel.addReservation()
             } label: {
-                Label(
-                    NSLocalizedString("add_reservation", comment: ""),
-                    systemImage: "plus.circle.fill"
+                HStack(spacing: 8) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title3)
+                    Text(NSLocalizedString("add_reservation", comment: ""))
+                        .fontWeight(.semibold)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(
+                    LinearGradient(
+                        colors: [Color.accentColor, Color.accentColor.opacity(0.9)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
                 )
-                .font(.headline)
+                .foregroundStyle(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .shadow(color: Color.accentColor.opacity(0.4), radius: 12, y: 6)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .padding(.top, 8)
+            .buttonStyle(.plain)
+            .padding(.horizontal, 32)
             
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(.systemBackground),
+                    Color.accentColor.opacity(0.02)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
     }
     
     // MARK: - Reservations List

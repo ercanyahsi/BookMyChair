@@ -31,8 +31,24 @@ struct HairdresserSelectionView: View {
                     Button {
                         viewModel.showingCreateSheet = true
                     } label: {
-                        Image(systemName: "plus")
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 32, height: 32)
+                                .shadow(color: Color.accentColor.opacity(0.3), radius: 4, y: 2)
+                            
+                            Image(systemName: "plus")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundStyle(.white)
+                        }
                     }
+                    .buttonStyle(.plain)
                 }
             }
             .sheet(isPresented: $viewModel.showingCreateSheet) {
@@ -47,36 +63,60 @@ struct HairdresserSelectionView: View {
         VStack(spacing: 0) {
             Spacer()
             
-            // App icon/logo representation
+            // App icon with gradient and animation
             ZStack {
                 Circle()
-                    .fill(Color.accentColor.opacity(0.1))
-                    .frame(width: 120, height: 120)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.accentColor.opacity(0.15),
+                                Color.accentColor.opacity(0.05)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 140, height: 140)
+                    .blur(radius: 15)
+                
+                Circle()
+                    .fill(Color(.systemBackground))
+                    .frame(width: 130, height: 130)
+                    .shadow(color: Color.accentColor.opacity(0.2), radius: 20, y: 10)
                 
                 Image(systemName: "scissors.circle.fill")
                     .font(.system(size: 72))
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .symbolRenderingMode(.hierarchical)
-            }
-            .padding(.bottom, 32)
-            
-            // Welcome message
-            VStack(spacing: 12) {
-                Text(NSLocalizedString("Welcome to BookMyChair", comment: ""))
-                    .font(.system(.title, design: .rounded))
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                
-                Text(NSLocalizedString("Manage your hairdressing appointments effortlessly", comment: ""))
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
             }
             .padding(.bottom, 40)
             
-            // Feature highlights
-            VStack(alignment: .leading, spacing: 20) {
+            // Welcome message with enhanced typography
+            VStack(spacing: 14) {
+                Text(NSLocalizedString("Welcome to BookMyChair", comment: ""))
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.bold)
+                    .tracking(-0.5)
+                    .multilineTextAlignment(.center)
+                
+                Text(NSLocalizedString("Manage your hairdressing appointments effortlessly", comment: ""))
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+                    .lineSpacing(2)
+            }
+            .padding(.bottom, 48)
+            
+            // Feature highlights with enhanced design
+            VStack(alignment: .leading, spacing: 24) {
                 FeatureRow(
                     icon: "person.crop.circle.badge.plus",
                     title: NSLocalizedString("Add Hairdressers", comment: ""),
@@ -96,26 +136,34 @@ struct HairdresserSelectionView: View {
                 )
             }
             .padding(.horizontal, 32)
-            .padding(.bottom, 40)
+            .padding(.bottom, 48)
             
-            // Call to action
+            // Call to action with gradient button
             Button {
                 viewModel.showingCreateSheet = true
             } label: {
                 HStack(spacing: 12) {
                     Image(systemName: "plus.circle.fill")
-                        .font(.title3)
+                        .font(.system(size: 20, weight: .semibold))
                     Text(NSLocalizedString("Add Your First Hairdresser", comment: ""))
+                        .font(.system(.body, design: .rounded))
                         .fontWeight(.semibold)
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(Color.accentColor)
+                .padding(.vertical, 18)
+                .background(
+                    LinearGradient(
+                        colors: [Color.accentColor, Color.accentColor.opacity(0.9)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
                 .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .shadow(color: Color.accentColor.opacity(0.4), radius: 15, y: 8)
             }
+            .buttonStyle(.plain)
             .padding(.horizontal, 32)
-            .shadow(color: Color.accentColor.opacity(0.3), radius: 10, y: 5)
             
             Spacer()
         }
@@ -211,23 +259,44 @@ struct HairdresserSelectionView: View {
 
 // MARK: - Supporting Views
 
-/// Feature row for empty state
+/// Feature row for empty state with enhanced design
 struct FeatureRow: View {
     let icon: String
     let title: String
     let description: String
     
     var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundStyle(Color.accentColor)
-                .symbolRenderingMode(.hierarchical)
-                .frame(width: 32)
+        HStack(spacing: 18) {
+            // Icon with gradient background
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.accentColor.opacity(0.12),
+                                Color.accentColor.opacity(0.06)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 48, height: 48)
+                
+                Image(systemName: icon)
+                    .font(.title3)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .symbolRenderingMode(.hierarchical)
+            }
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(title)
-                    .font(.subheadline)
+                    .font(.system(.subheadline, design: .rounded))
                     .fontWeight(.semibold)
                 
                 Text(description)
@@ -240,26 +309,43 @@ struct FeatureRow: View {
     }
 }
 
-/// Row view for displaying a hairdresser
+/// Row view for displaying a hairdresser with enhanced visual design
 struct HairdresserRowView: View {
     let hairdresser: Hairdresser
+    @State private var isPressed = false
     
     var body: some View {
-        HStack(spacing: 16) {
-            // Avatar circle
+        HStack(spacing: 18) {
+            // Avatar circle with gradient
             ZStack {
                 Circle()
-                    .fill(Color.accentColor.opacity(0.15))
-                    .frame(width: 56, height: 56)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.accentColor.opacity(0.2),
+                                Color.accentColor.opacity(0.1)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 60, height: 60)
+                    .shadow(color: Color.accentColor.opacity(0.15), radius: 8, y: 3)
                 
                 Image(systemName: "person.fill")
-                    .font(.title2)
-                    .foregroundStyle(Color.accentColor)
+                    .font(.system(size: 24))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
             }
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(hairdresser.name)
-                    .font(.headline)
+                    .font(.system(.body, design: .rounded))
                     .fontWeight(.semibold)
                 
                 HStack(spacing: 6) {
@@ -273,7 +359,20 @@ struct HairdresserRowView: View {
             
             Spacer()
         }
-        .padding(.vertical, 12)
+        .padding(.vertical, 14)
+        .padding(.horizontal, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color(.systemBackground))
+                .shadow(color: Color.black.opacity(0.05), radius: 6, y: 2)
+        )
+        .scaleEffect(isPressed ? 0.98 : 1.0)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isPressed)
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in isPressed = true }
+                .onEnded { _ in isPressed = false }
+        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(hairdresser.name)
         .accessibilityHint(NSLocalizedString("Tap to view schedule", comment: ""))

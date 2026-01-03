@@ -45,14 +45,34 @@ struct ReservationEditorView: View {
                         )
                         .textContentType(.name)
                         .autocorrectionDisabled()
+                        .font(.system(.body, design: .rounded))
                         
                         Button {
                             showingContactPicker = true
                         } label: {
-                            Image(systemName: "person.crop.circle.badge.plus")
-                                .font(.title3)
-                                .foregroundStyle(.blue)
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [Color.accentColor.opacity(0.15), Color.accentColor.opacity(0.08)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .frame(width: 36, height: 36)
+                                
+                                Image(systemName: "person.crop.circle.badge.plus")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(
+                                        LinearGradient(
+                                            colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                            }
                         }
+                        .buttonStyle(.plain)
                         .accessibilityLabel(NSLocalizedString("Select from contacts", comment: ""))
                     }
                     
@@ -62,6 +82,7 @@ struct ReservationEditorView: View {
                     )
                     .textContentType(.telephoneNumber)
                     .keyboardType(.phonePad)
+                    .font(.system(.body, design: .rounded))
                 }
                 
                 // Time Selection
@@ -98,12 +119,19 @@ struct ReservationEditorView: View {
                     Text(NSLocalizedString("Appointment Time", comment: ""))
                 }
                 
-                // Error Display
+                // Error Display with enhanced styling
                 if let errorMessage = viewModel.errorMessage {
                     Section {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                            .font(.callout)
+                        HStack(spacing: 12) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.title3)
+                                .foregroundStyle(.red)
+                            
+                            Text(errorMessage)
+                                .font(.subheadline)
+                                .foregroundColor(.red)
+                        }
+                        .padding(.vertical, 4)
                     }
                 }
             }
@@ -114,6 +142,7 @@ struct ReservationEditorView: View {
                     Button(NSLocalizedString("cancel_button", comment: "")) {
                         dismiss()
                     }
+                    .foregroundStyle(.secondary)
                 }
                 
                 if viewModel.isEditing {
@@ -121,7 +150,18 @@ struct ReservationEditorView: View {
                         Button(role: .destructive) {
                             viewModel.confirmDelete()
                         } label: {
-                            Label(NSLocalizedString("delete_button", comment: ""), systemImage: "trash")
+                            HStack(spacing: 8) {
+                                Image(systemName: "trash.fill")
+                                    .font(.system(size: 16, weight: .semibold))
+                                Text(NSLocalizedString("delete_button", comment: ""))
+                                    .fontWeight(.semibold)
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.red.opacity(0.1))
+                            )
                         }
                     }
                 }
@@ -130,7 +170,13 @@ struct ReservationEditorView: View {
                     Button(NSLocalizedString("save_button", comment: "")) {
                         viewModel.save()
                     }
-                    .fontWeight(.semibold)
+                    .font(.system(.body, design: .rounded))
+                    .fontWeight(.bold)
+                    .foregroundStyle(
+                        viewModel.customerName.isEmpty || viewModel.phoneNumber.isEmpty
+                            ? .secondary
+                            : Color.accentColor
+                    )
                     .disabled(viewModel.customerName.isEmpty || viewModel.phoneNumber.isEmpty)
                 }
             }
