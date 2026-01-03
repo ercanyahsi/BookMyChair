@@ -11,6 +11,7 @@ import SwiftUI
 struct ReservationEditorView: View {
     @State private var viewModel: ReservationEditorViewModel
     @Environment(\.dismiss) private var dismiss
+    @State private var showingContactPicker = false
     
     init(
         hairdresser: Hairdresser,
@@ -37,12 +38,23 @@ struct ReservationEditorView: View {
             Form {
                 // Customer Information
                 Section {
-                    TextField(
-                        NSLocalizedString("customer_name", comment: ""),
-                        text: $viewModel.customerName
-                    )
-                    .textContentType(.name)
-                    .autocorrectionDisabled()
+                    HStack {
+                        TextField(
+                            NSLocalizedString("customer_name", comment: ""),
+                            text: $viewModel.customerName
+                        )
+                        .textContentType(.name)
+                        .autocorrectionDisabled()
+                        
+                        Button {
+                            showingContactPicker = true
+                        } label: {
+                            Image(systemName: "person.crop.circle.badge.plus")
+                                .font(.title3)
+                                .foregroundStyle(.blue)
+                        }
+                        .accessibilityLabel(NSLocalizedString("Select from contacts", comment: ""))
+                    }
                     
                     TextField(
                         NSLocalizedString("phone_number", comment: ""),
@@ -143,5 +155,11 @@ struct ReservationEditorView: View {
                 Text(NSLocalizedString("delete_confirmation_message", comment: ""))
             }
         }
+        .background(
+            ContactPicker(isPresented: $showingContactPicker) { name, phone in
+                viewModel.customerName = name
+                viewModel.phoneNumber = phone
+            }
+        )
     }
 }

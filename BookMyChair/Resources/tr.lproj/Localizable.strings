@@ -22,6 +22,11 @@
 "minute" = "Dakika";
 "save_button" = "Kaydet";
 "delete_button" = "Sil";
+"Select from contacts" = "Kişilerden Seç";
+"Call customer" = "Müşteriyi Ara";
+"Add new reservation" = "Yeni Randevu Ekle";
+"Tap to edit reservation" = "Düzenlemek için dokun";
+"Appointment Time" = "Randevu Saati";
 
 /* Alerts */
 "error" = "Hata";

@@ -22,6 +22,11 @@
 "minute" = "Minute";
 "save_button" = "Save";
 "delete_button" = "Delete";
+"Select from contacts" = "Select from Contacts";
+"Call customer" = "Call Customer";
+"Add new reservation" = "Add New Reservation";
+"Tap to edit reservation" = "Tap to edit reservation";
+"Appointment Time" = "Appointment Time";
 
 /* Alerts */
 "error" = "Error";
