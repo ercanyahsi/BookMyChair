@@ -4,6 +4,18 @@
 "hairdresser_name_placeholder" = "Kuaför Adı";
 "create_button" = "Oluştur";
 "cancel_button" = "İptal";
+"Welcome to BookMyChair" = "BookMyChair'e Hoş Geldiniz";
+"Manage your hairdressing appointments effortlessly" = "Kuaför randevularınızı kolayca yönetin";
+"Add Hairdressers" = "Kuaför Ekle";
+"Create profiles for each stylist" = "Her bir stilist için profil oluşturun";
+"Schedule Appointments" = "Randevu Planlama";
+"Book and track daily reservations" = "Günlük randevuları planlayın ve takip edin";
+"Quick Contact" = "Hızlı İletişim";
+"Call customers with one tap" = "Müşterileri tek dokunuşla arayın";
+"Add Your First Hairdresser" = "İlk Kuaförünüzü Ekleyin";
+"Select a hairdresser to view their schedule" = "Programını görmek için bir kuaför seçin";
+"View Schedule" = "Programı Görüntüle";
+"Tap to view schedule" = "Programı görmek için dokun";
 
 /* Reservation List */
 "today" = "Bugün";

@@ -62,12 +62,12 @@ struct HairdresserSelectionView: View {
             
             // Welcome message
             VStack(spacing: 12) {
-                Text("Welcome to BookMyChair")
+                Text(NSLocalizedString("Welcome to BookMyChair", comment: ""))
                     .font(.system(.title, design: .rounded))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                 
-                Text("Manage your hairdressing appointments effortlessly")
+                Text(NSLocalizedString("Manage your hairdressing appointments effortlessly", comment: ""))
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -79,20 +79,20 @@ struct HairdresserSelectionView: View {
             VStack(alignment: .leading, spacing: 20) {
                 FeatureRow(
                     icon: "person.crop.circle.badge.plus",
-                    title: "Add Hairdressers",
-                    description: "Create profiles for each stylist"
+                    title: NSLocalizedString("Add Hairdressers", comment: ""),
+                    description: NSLocalizedString("Create profiles for each stylist", comment: "")
                 )
                 
                 FeatureRow(
                     icon: "calendar.badge.clock",
-                    title: "Schedule Appointments",
-                    description: "Book and track daily reservations"
+                    title: NSLocalizedString("Schedule Appointments", comment: ""),
+                    description: NSLocalizedString("Book and track daily reservations", comment: "")
                 )
                 
                 FeatureRow(
                     icon: "phone.circle.fill",
-                    title: "Quick Contact",
-                    description: "Call customers with one tap"
+                    title: NSLocalizedString("Quick Contact", comment: ""),
+                    description: NSLocalizedString("Call customers with one tap", comment: "")
                 )
             }
             .padding(.horizontal, 32)
@@ -105,7 +105,7 @@ struct HairdresserSelectionView: View {
                 HStack(spacing: 12) {
                     Image(systemName: "plus.circle.fill")
                         .font(.title3)
-                    Text("Add Your First Hairdresser")
+                    Text(NSLocalizedString("Add Your First Hairdresser", comment: ""))
                         .fontWeight(.semibold)
                 }
                 .frame(maxWidth: .infinity)
@@ -129,7 +129,7 @@ struct HairdresserSelectionView: View {
         VStack(spacing: 0) {
             // Header info
             VStack(spacing: 8) {
-                Text("Select a hairdresser to view their schedule")
+                Text(NSLocalizedString("Select a hairdresser to view their schedule", comment: ""))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -265,21 +265,17 @@ struct HairdresserRowView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "calendar.badge.clock")
                         .font(.caption)
-                    Text("View Schedule")
+                    Text(NSLocalizedString("View Schedule", comment: ""))
                         .font(.caption)
                 }
                 .foregroundStyle(.secondary)
             }
             
             Spacer()
-            
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundStyle(.tertiary)
         }
         .padding(.vertical, 12)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(hairdresser.name)
-        .accessibilityHint("Tap to view schedule")
+        .accessibilityHint(NSLocalizedString("Tap to view schedule", comment: ""))
     }
 }

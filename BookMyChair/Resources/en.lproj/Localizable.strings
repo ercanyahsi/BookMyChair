@@ -4,6 +4,18 @@
 "hairdresser_name_placeholder" = "Hairdresser Name";
 "create_button" = "Create";
 "cancel_button" = "Cancel";
+"Welcome to BookMyChair" = "Welcome to BookMyChair";
+"Manage your hairdressing appointments effortlessly" = "Manage your hairdressing appointments effortlessly";
+"Add Hairdressers" = "Add Hairdressers";
+"Create profiles for each stylist" = "Create profiles for each stylist";
+"Schedule Appointments" = "Schedule Appointments";
+"Book and track daily reservations" = "Book and track daily reservations";
+"Quick Contact" = "Quick Contact";
+"Call customers with one tap" = "Call customers with one tap";
+"Add Your First Hairdresser" = "Add Your First Hairdresser";
+"Select a hairdresser to view their schedule" = "Select a hairdresser to view their schedule";
+"View Schedule" = "View Schedule";
+"Tap to view schedule" = "Tap to view schedule";
 
 /* Reservation List */
 "today" = "Today";
