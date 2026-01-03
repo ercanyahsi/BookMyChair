@@ -136,16 +136,116 @@ struct ReservationListView: View {
     
     private var reservationsList: some View {
         List {
-            ForEach(viewModel.reservations, id: \.id) { reservation in
-                ReservationRowView(reservation: reservation)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.editReservation(reservation)
+            ForEach(Array(viewModel.reservations.enumerated()), id: \.element.id) { index, reservation in
+                VStack(spacing: 0) {
+                    // Show current time indicator if applicable
+                    if shouldShowCurrentTimeIndicator(before: reservation, at: index) {
+                        currentTimeIndicator
                     }
+                    
+                    ReservationRowView(reservation: reservation)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            viewModel.editReservation(reservation)
+                        }
+                }
             }
             .onDelete(perform: deleteReservations)
+            
+            // Show current time indicator at the end if needed
+            if shouldShowCurrentTimeIndicatorAtEnd() {
+                currentTimeIndicator
+            }
         }
         .listStyle(.plain)
+    }
+    
+    // MARK: - Current Time Indicator
+    
+    private var currentTimeIndicator: some View {
+        HStack(spacing: 8) {
+            Text(currentTimeString)
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(.white)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule()
+                        .fill(Color.blue)
+                )
+            
+            Rectangle()
+                .fill(Color.blue)
+                .frame(height: 2)
+        }
+        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+        .listRowSeparator(.hidden)
+    }
+    
+    private var currentTimeString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: Date())
+    }
+    
+    private func shouldShowCurrentTimeIndicator(before reservation: Reservation, at index: Int) -> Bool {
+        // Only show for today
+        guard Calendar.current.isDateInToday(viewModel.selectedDate) else {
+            return false
+        }
+        
+        let now = Date()
+        let calendar = Calendar.current
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
+        
+        let reservationHour = reservation.timeSlot.hour
+        let reservationMinute = reservation.timeSlot.minute
+        
+        // Check if this is the first reservation
+        if index == 0 {
+            // Show indicator if current time is before first reservation
+            if currentHour < reservationHour || (currentHour == reservationHour && currentMinute < reservationMinute) {
+                return true
+            }
+        }
+        
+        // Check if current time is between previous and current reservation
+        if index > 0 {
+            let previousReservation = viewModel.reservations[index - 1]
+            let prevHour = previousReservation.timeSlot.hour
+            let prevMinute = previousReservation.timeSlot.minute
+            
+            let afterPrevious = currentHour > prevHour || (currentHour == prevHour && currentMinute >= prevMinute)
+            let beforeCurrent = currentHour < reservationHour || (currentHour == reservationHour && currentMinute < reservationMinute)
+            
+            return afterPrevious && beforeCurrent
+        }
+        
+        return false
+    }
+    
+    private func shouldShowCurrentTimeIndicatorAtEnd() -> Bool {
+        // Only show for today
+        guard Calendar.current.isDateInToday(viewModel.selectedDate) else {
+            return false
+        }
+        
+        // Show at end if current time is after all reservations
+        guard let lastReservation = viewModel.reservations.last else {
+            return false
+        }
+        
+        let now = Date()
+        let calendar = Calendar.current
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
+        
+        let lastHour = lastReservation.timeSlot.hour
+        let lastMinute = lastReservation.timeSlot.minute
+        
+        return currentHour > lastHour || (currentHour == lastHour && currentMinute >= lastMinute)
     }
     
     // MARK: - Actions
