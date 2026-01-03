@@ -19,8 +19,6 @@ struct ReservationRowView: View {
     let reservation: Reservation
     var status: ReservationStatus = .upcoming
     
-    @State private var isPressed = false
-    
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
             // Time badge with status indicator and gradient
@@ -121,13 +119,6 @@ struct ReservationRowView: View {
                         : LinearGradient(colors: [Color.clear], startPoint: .top, endPoint: .bottom),
                     lineWidth: 2
                 )
-        )
-        .scaleEffect(isPressed ? 0.98 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isPressed)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(reservation.formattedTime), \(reservation.customerName)")

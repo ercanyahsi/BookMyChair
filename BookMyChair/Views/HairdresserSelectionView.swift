@@ -312,7 +312,6 @@ struct FeatureRow: View {
 /// Row view for displaying a hairdresser with enhanced visual design
 struct HairdresserRowView: View {
     let hairdresser: Hairdresser
-    @State private var isPressed = false
     
     var body: some View {
         HStack(spacing: 18) {
@@ -365,13 +364,6 @@ struct HairdresserRowView: View {
             RoundedRectangle(cornerRadius: 14)
                 .fill(Color(.systemBackground))
                 .shadow(color: Color.black.opacity(0.05), radius: 6, y: 2)
-        )
-        .scaleEffect(isPressed ? 0.98 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isPressed)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(hairdresser.name)
