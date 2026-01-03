@@ -94,7 +94,7 @@ struct HairdresserSelectionView: View {
             GeometryReader { geometry in
                 Image(systemName: "scissors")
                     .font(.system(size: 280))
-                    .foregroundStyle(Color.accentColor.opacity(0.04))
+                    .foregroundStyle(Color.primary.opacity(0.06))
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .position(x: geometry.size.width * 0.2, y: geometry.size.height * 0.3)
                     .rotationEffect(.degrees(-25))
@@ -248,7 +248,7 @@ struct HairdresserSelectionView: View {
             GeometryReader { geometry in
                 Image(systemName: "scissors")
                     .font(.system(size: 200))
-                    .foregroundStyle(Color.accentColor.opacity(0.03))
+                    .foregroundStyle(Color.primary.opacity(0.05))
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .position(x: geometry.size.width * 0.8, y: geometry.size.height * 0.7)
                     .rotationEffect(.degrees(20))

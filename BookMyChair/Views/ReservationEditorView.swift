@@ -40,7 +40,7 @@ struct ReservationEditorView: View {
                 GeometryReader { geometry in
                     Image(systemName: "clock")
                         .font(.system(size: 250))
-                        .foregroundStyle(Color.accentColor.opacity(0.03))
+                        .foregroundStyle(Color.primary.opacity(0.05))
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .position(x: geometry.size.width * 0.75, y: geometry.size.height * 0.7)
                         .rotationEffect(.degrees(-20))

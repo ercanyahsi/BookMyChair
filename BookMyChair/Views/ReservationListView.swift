@@ -39,7 +39,7 @@ struct ReservationListView: View {
             GeometryReader { geometry in
                 Image(systemName: "calendar")
                     .font(.system(size: 300))
-                    .foregroundStyle(Color.accentColor.opacity(0.03))
+                    .foregroundStyle(Color.primary.opacity(0.05))
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .position(x: geometry.size.width * 0.8, y: geometry.size.height * 0.6)
                     .rotationEffect(.degrees(15))
