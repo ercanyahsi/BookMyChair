@@ -29,6 +29,9 @@
 "edit_reservation" = "Edit Reservation";
 "customer_name" = "Customer Name";
 "phone_number" = "Phone Number";
+"Customer" = "Customer";
+"Recommended" = "Recommended";
+"Or enter manually" = "Or enter manually";
 "select_time" = "Select Time";
 "hour" = "Hour";
 "minute" = "Minute";

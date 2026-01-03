@@ -38,43 +38,62 @@ struct ReservationEditorView: View {
             Form {
                 // Customer Information
                 Section {
-                    HStack {
-                        TextField(
-                            NSLocalizedString("customer_name", comment: ""),
-                            text: $viewModel.customerName
-                        )
-                        .textContentType(.name)
-                        .autocorrectionDisabled()
-                        .font(.system(.body, design: .rounded))
-                        
-                        Button {
-                            showingContactPicker = true
-                        } label: {
+                    // Contact picker button - emphasized
+                    Button {
+                        showingContactPicker = true
+                    } label: {
+                        HStack(spacing: 12) {
                             ZStack {
                                 Circle()
                                     .fill(
                                         LinearGradient(
-                                            colors: [Color.accentColor.opacity(0.15), Color.accentColor.opacity(0.08)],
+                                            colors: [Color.accentColor, Color.accentColor.opacity(0.9)],
                                             startPoint: .topLeading,
                                             endPoint: .bottomTrailing
                                         )
                                     )
-                                    .frame(width: 36, height: 36)
+                                    .frame(width: 44, height: 44)
+                                    .shadow(color: Color.accentColor.opacity(0.3), radius: 4, y: 2)
                                 
                                 Image(systemName: "person.crop.circle.badge.plus")
-                                    .font(.system(size: 18, weight: .semibold))
-                                    .foregroundStyle(
-                                        LinearGradient(
-                                            colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
+                                    .font(.system(size: 20, weight: .semibold))
+                                    .foregroundStyle(.white)
                             }
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(NSLocalizedString("Select from contacts", comment: ""))
+                                    .font(.system(.body, design: .rounded))
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Color.accentColor)
+                                
+                                Text(NSLocalizedString("Recommended", comment: ""))
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
                         }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(NSLocalizedString("Select from contacts", comment: ""))
+                        .padding(.vertical, 8)
                     }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(NSLocalizedString("Select from contacts", comment: ""))
+                } header: {
+                    Text(NSLocalizedString("Customer", comment: ""))
+                }
+                
+                // Manual entry section
+                Section {
+                    TextField(
+                        NSLocalizedString("customer_name", comment: ""),
+                        text: $viewModel.customerName
+                    )
+                    .textContentType(.name)
+                    .autocorrectionDisabled()
+                    .font(.system(.body, design: .rounded))
                     
                     TextField(
                         NSLocalizedString("phone_number", comment: ""),
@@ -83,6 +102,8 @@ struct ReservationEditorView: View {
                     .textContentType(.telephoneNumber)
                     .keyboardType(.phonePad)
                     .font(.system(.body, design: .rounded))
+                } header: {
+                    Text(NSLocalizedString("Or enter manually", comment: ""))
                 }
                 
                 // Time Selection
@@ -163,11 +184,15 @@ struct ReservationEditorView: View {
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.bold)
                     .foregroundStyle(
-                        viewModel.customerName.isEmpty || viewModel.phoneNumber.isEmpty
+                        viewModel.customerName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || 
+                        viewModel.phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                             ? .secondary
                             : Color.accentColor
                     )
-                    .disabled(viewModel.customerName.isEmpty || viewModel.phoneNumber.isEmpty)
+                    .disabled(
+                        viewModel.customerName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || 
+                        viewModel.phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                    )
                 }
             }
             .alert(

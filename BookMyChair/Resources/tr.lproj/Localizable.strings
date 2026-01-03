@@ -29,6 +29,9 @@
 "edit_reservation" = "Randevuyu Düzenle";
 "customer_name" = "Müşteri Adı";
 "phone_number" = "Telefon Numarası";
+"Customer" = "Müşteri";
+"Recommended" = "Önerilen";
+"Or enter manually" = "Veya elle girin";
 "select_time" = "Saat Seç";
 "hour" = "Saat";
 "minute" = "Dakika";
