@@ -35,6 +35,18 @@ struct ReservationEditorView: View {
     
     var body: some View {
         NavigationStack {
+            ZStack {
+                // Decorative clock icon
+                GeometryReader { geometry in
+                    Image(systemName: "clock")
+                        .font(.system(size: 250))
+                        .foregroundStyle(Color.accentColor.opacity(0.03))
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .position(x: geometry.size.width * 0.75, y: geometry.size.height * 0.7)
+                        .rotationEffect(.degrees(-20))
+                }
+                .allowsHitTesting(false)
+                
             Form {
                 // Customer Information
                 Section {
@@ -153,6 +165,7 @@ struct ReservationEditorView: View {
                                 .foregroundColor(.red)
                         }
                         .padding(.vertical, 4)
+                    }
                     }
                 }
             }

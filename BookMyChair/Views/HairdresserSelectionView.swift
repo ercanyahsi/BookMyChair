@@ -90,6 +90,17 @@ struct HairdresserSelectionView: View {
             )
             .ignoresSafeArea()
             
+            // Large decorative scissors icon
+            GeometryReader { geometry in
+                Image(systemName: "scissors")
+                    .font(.system(size: 280))
+                    .foregroundStyle(Color.accentColor.opacity(0.04))
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .position(x: geometry.size.width * 0.2, y: geometry.size.height * 0.3)
+                    .rotationEffect(.degrees(-25))
+            }
+            .allowsHitTesting(false)
+            
             // Decorative circles
             GeometryReader { geometry in
                 Circle()
@@ -232,6 +243,18 @@ struct HairdresserSelectionView: View {
     // MARK: - Hairdresser List
     
     private var hairdresserListView: some View {
+        ZStack {
+            // Decorative scissors icon for list view
+            GeometryReader { geometry in
+                Image(systemName: "scissors")
+                    .font(.system(size: 200))
+                    .foregroundStyle(Color.accentColor.opacity(0.03))
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .position(x: geometry.size.width * 0.8, y: geometry.size.height * 0.7)
+                    .rotationEffect(.degrees(20))
+            }
+            .allowsHitTesting(false)
+            
         VStack(spacing: 0) {
             // Header info
             VStack(spacing: 8) {
@@ -260,6 +283,7 @@ struct HairdresserSelectionView: View {
                 hairdresser: hairdresser,
                 dataStore: viewModel.dataStore
             )
+        }
         }
     }
     
