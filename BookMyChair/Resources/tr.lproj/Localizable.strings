@@ -57,3 +57,20 @@
 
 /* Time Display */
 "time_format" = "%d:%02d";
+
+/* About Screen */
+"about_title" = "Hakkında";
+"about_version" = "Sürüm 1.0.0";
+"about_description_title" = "BookMyChair Hakkında";
+"about_description_text" = "BookMyChair, özellikle kuaförler ve kuaför salonları için tasarlanmış profesyonel bir randevu yönetim uygulamasıdır. Günlük programınızı kolaylaştırın, birden fazla stilisti yönetin ve tüm müşteri randevularınızı tek bir yerde takip edin.";
+"about_features_title" = "Öne Çıkan Özellikler";
+"about_feature_hairdressers" = "Çoklu Kuaför";
+"about_feature_hairdressers_desc" = "Salonunuzdaki her stilist için profil oluşturun ve yönetin";
+"about_feature_scheduling" = "Akıllı Planlama";
+"about_feature_scheduling_desc" = "Çakışma tespiti ve zaman doğrulaması ile randevu oluşturun";
+"about_feature_contact" = "Anında İletişim";
+"about_feature_contact_desc" = "Müşterileri uygulama içinden tek dokunuşla arayın";
+"about_support_title" = "Uygulamayı Destekle";
+"about_support_text" = "BookMyChair'i faydalı buluyorsanız, geliştirilmesini desteklemeyi düşünün. Katkınız uygulamayı geliştirmemize ve sürdürmemize yardımcı oluyor.";
+"about_donate_coming_soon" = "Bağış butonu yakında gelecek";
+"about_developer" = "Kuaför profesyonelleri için ❤️ ile geliştirildi";

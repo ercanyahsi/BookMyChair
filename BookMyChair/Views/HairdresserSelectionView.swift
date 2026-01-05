@@ -13,6 +13,7 @@ struct HairdresserSelectionView: View {
     @State private var selectedHairdresser: Hairdresser?
     @State private var hairdresserToDelete: Hairdresser?
     @State private var showingDeleteAlert = false
+    @State private var showingAbout = false
     
     init(dataStore: AppDataStore) {
         _viewModel = State(wrappedValue: HairdresserSelectionViewModel(dataStore: dataStore))
@@ -29,6 +30,15 @@ struct HairdresserSelectionView: View {
             }
             .navigationTitle(NSLocalizedString("hairdresser_selection_title", comment: ""))
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showingAbout = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                            .font(.system(size: 18))
+                    }
+                }
+                
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         viewModel.showingCreateSheet = true
@@ -55,6 +65,9 @@ struct HairdresserSelectionView: View {
             }
             .sheet(isPresented: $viewModel.showingCreateSheet) {
                 createHairdresserSheet
+            }
+            .sheet(isPresented: $showingAbout) {
+                AboutView()
             }
             .alert(
                 NSLocalizedString("delete_hairdresser_title", comment: ""),

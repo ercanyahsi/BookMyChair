@@ -59,3 +59,20 @@
 
 /* Time Display */
 "time_format" = "%d:%02d";
+
+/* About Screen */
+"about_title" = "About";
+"about_version" = "Version 1.0.0";
+"about_description_title" = "About BookMyChair";
+"about_description_text" = "BookMyChair is a professional appointment management app designed specifically for hairdressers and hair salons. Streamline your daily schedule, manage multiple stylists, and keep track of all your customer appointments in one place.";
+"about_features_title" = "Key Features";
+"about_feature_hairdressers" = "Multiple Hairdressers";
+"about_feature_hairdressers_desc" = "Create and manage profiles for each stylist in your salon";
+"about_feature_scheduling" = "Smart Scheduling";
+"about_feature_scheduling_desc" = "Book appointments with conflict detection and time validation";
+"about_feature_contact" = "Instant Contact";
+"about_feature_contact_desc" = "Call customers directly from the app with one tap";
+"about_support_title" = "Support the App";
+"about_support_text" = "If you find BookMyChair useful, consider supporting its development. Your contribution helps us improve and maintain the app.";
+"about_donate_coming_soon" = "Donate button coming soon";
+"about_developer" = "Developed with ❤️ for hair professionals";
