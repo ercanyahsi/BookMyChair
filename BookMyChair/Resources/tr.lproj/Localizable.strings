@@ -42,6 +42,13 @@
 "Add new reservation" = "Yeni Randevu Ekle";
 "Tap to edit reservation" = "Düzenlemek için dokun";
 "Appointment Time" = "Randevu Saati";
+"duration" = "Süre";
+"duration_30_min" = "30 dakika";
+"duration_1_hour" = "1 saat";
+"duration_1_5_hours" = "1,5 saat";
+"duration_2_hours" = "2 saat";
+"duration_2_5_hours" = "2,5 saat";
+"duration_3_hours" = "3 saat";
 
 /* Alerts */
 "error" = "Hata";
@@ -74,3 +81,8 @@
 "about_support_text" = "BookMyChair'i faydalı buluyorsanız, geliştirilmesini desteklemeyi düşünün. Katkınız uygulamayı geliştirmemize ve sürdürmemize yardımcı oluyor.";
 "about_donate_coming_soon" = "Bağış butonu yakında gelecek";
 "about_developer" = "Kuaför profesyonelleri için ❤️ ile geliştirildi";
+
+/* Notifications */
+"notification_title_15min" = "15 Dakika Sonra Randevu";
+"notification_title_5min" = "5 Dakika Sonra Randevu";
+"notification_body" = "%@ - Saat %@ Randevu";

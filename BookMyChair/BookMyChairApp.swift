@@ -43,6 +43,10 @@ struct BookMyChairApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(dataStore: dataStore)
+                .task {
+                    // Request notification permission on app launch
+                    _ = await NotificationManager.shared.requestAuthorization()
+                }
         }
         .modelContainer(modelContainer)
     }

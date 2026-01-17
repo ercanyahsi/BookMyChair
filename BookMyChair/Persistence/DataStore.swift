@@ -72,10 +72,15 @@ class AppDataStore {
         hairdresser: Hairdresser,
         date: Date,
         timeSlot: TimeSlot,
+        durationMinutes: Int,
         excluding reservationId: UUID? = nil
     ) -> Bool {
         let normalizedDate = DateHelpers.normalizeToDay(date)
         let existingReservations = fetchReservations(for: hairdresser, on: normalizedDate)
+        
+        // Convert new appointment to minutes since midnight
+        let newStartMinutes = timeSlot.hour * 60 + timeSlot.minute
+        let newEndMinutes = newStartMinutes + durationMinutes
         
         return existingReservations.contains { reservation in
             // Skip the reservation being edited
@@ -83,8 +88,12 @@ class AppDataStore {
                 return false
             }
             
-            // Check if time slots match
-            return reservation.timeSlot == timeSlot
+            // Convert existing appointment to minutes since midnight
+            let existingStartMinutes = reservation.timeSlotHour * 60 + reservation.timeSlotMinute
+            let existingEndMinutes = existingStartMinutes + reservation.durationMinutes
+            
+            // Check for overlap: two time ranges overlap if start1 < end2 AND start2 < end1
+            return newStartMinutes < existingEndMinutes && existingStartMinutes < newEndMinutes
         }
     }
     
@@ -94,10 +103,11 @@ class AppDataStore {
         phoneNumber: String,
         date: Date,
         timeSlot: TimeSlot,
-        hairdresser: Hairdresser
+        hairdresser: Hairdresser,
+        durationMinutes: Int = 60
     ) throws -> Reservation {
         // Check for conflicts
-        if hasConflict(hairdresser: hairdresser, date: date, timeSlot: timeSlot) {
+        if hasConflict(hairdresser: hairdresser, date: date, timeSlot: timeSlot, durationMinutes: durationMinutes) {
             throw ReservationError.timeConflict
         }
         
@@ -106,11 +116,18 @@ class AppDataStore {
             phoneNumber: phoneNumber,
             date: date,
             timeSlot: timeSlot,
-            hairdresser: hairdresser
+            hairdresser: hairdresser,
+            durationMinutes: durationMinutes
         )
         
         modelContext.insert(reservation)
         try modelContext.save()
+        
+        // Schedule notifications for the new reservation
+        Task {
+            await NotificationManager.shared.scheduleNotifications(for: reservation)
+        }
+        
         return reservation
     }
     
@@ -120,7 +137,8 @@ class AppDataStore {
         customerName: String,
         phoneNumber: String,
         date: Date,
-        timeSlot: TimeSlot
+        timeSlot: TimeSlot,
+        durationMinutes: Int = 60
     ) throws {
         guard let hairdresser = reservation.hairdresser else {
             throw ReservationError.invalidData
@@ -131,6 +149,7 @@ class AppDataStore {
             hairdresser: hairdresser,
             date: date,
             timeSlot: timeSlot,
+            durationMinutes: durationMinutes,
             excluding: reservation.id
         ) {
             throw ReservationError.timeConflict
@@ -140,14 +159,26 @@ class AppDataStore {
         reservation.phoneNumber = phoneNumber
         reservation.date = DateHelpers.normalizeToDay(date)
         reservation.timeSlot = timeSlot
+        reservation.durationMinutes = durationMinutes
         
         try modelContext.save()
+        
+        // Reschedule notifications with updated information
+        Task {
+            await NotificationManager.shared.scheduleNotifications(for: reservation)
+        }
     }
     
     /// Delete a reservation
     func deleteReservation(_ reservation: Reservation) throws {
+        let reservationId = reservation.id
         modelContext.delete(reservation)
         try modelContext.save()
+        
+        // Cancel any scheduled notifications
+        Task {
+            await NotificationManager.shared.cancelNotifications(for: reservationId)
+        }
     }
 }
 

@@ -42,6 +42,13 @@
 "Add new reservation" = "Add New Reservation";
 "Tap to edit reservation" = "Tap to edit reservation";
 "Appointment Time" = "Appointment Time";
+"duration" = "Duration";
+"duration_30_min" = "30 minutes";
+"duration_1_hour" = "1 hour";
+"duration_1_5_hours" = "1.5 hours";
+"duration_2_hours" = "2 hours";
+"duration_2_5_hours" = "2.5 hours";
+"duration_3_hours" = "3 hours";
 
 /* Alerts */
 "error" = "Error";
@@ -76,3 +83,8 @@
 "about_support_text" = "If you find BookMyChair useful, consider supporting its development. Your contribution helps us improve and maintain the app.";
 "about_donate_coming_soon" = "Donate button coming soon";
 "about_developer" = "Developed with ❤️ for hair professionals";
+
+/* Notifications */
+"notification_title_15min" = "Appointment in 15 Minutes";
+"notification_title_5min" = "Appointment in 5 Minutes";
+"notification_body" = "%@ - Appointment at %@";

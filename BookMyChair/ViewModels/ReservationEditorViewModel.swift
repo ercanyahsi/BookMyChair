@@ -17,6 +17,7 @@ class ReservationEditorViewModel {
     var phoneNumber: String = ""
     var selectedHour: Int = 9
     var selectedMinute: Int = 0
+    var selectedDuration: Int = 60 // Duration in minutes
     var errorMessage: String?
     var showingDeleteConfirmation = false
     var showingConflictAlert = false
@@ -57,6 +58,7 @@ class ReservationEditorViewModel {
             self.phoneNumber = reservation.phoneNumber
             self.selectedHour = reservation.timeSlotHour
             self.selectedMinute = reservation.timeSlotMinute
+            self.selectedDuration = reservation.durationMinutes
         } else {
             // Set default time for new reservations
             let calendar = Calendar.current
@@ -110,6 +112,18 @@ class ReservationEditorViewModel {
         }
         
         return allHours
+    }
+    
+    /// Available duration options in minutes
+    var availableDurations: [(minutes: Int, label: String)] {
+        [
+            (30, NSLocalizedString("duration_30_min", comment: "")),
+            (60, NSLocalizedString("duration_1_hour", comment: "")),
+            (90, NSLocalizedString("duration_1_5_hours", comment: "")),
+            (120, NSLocalizedString("duration_2_hours", comment: "")),
+            (150, NSLocalizedString("duration_2_5_hours", comment: "")),
+            (180, NSLocalizedString("duration_3_hours", comment: ""))
+        ]
     }
     
     /// Available minutes (0, 30)
@@ -170,7 +184,8 @@ class ReservationEditorViewModel {
                     customerName: customerName.trimmingCharacters(in: .whitespacesAndNewlines),
                     phoneNumber: phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines),
                     date: date,
-                    timeSlot: timeSlot
+                    timeSlot: timeSlot,
+                    durationMinutes: selectedDuration
                 )
             } else {
                 // Create new reservation
@@ -179,7 +194,8 @@ class ReservationEditorViewModel {
                     phoneNumber: phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines),
                     date: date,
                     timeSlot: timeSlot,
-                    hairdresser: hairdresser
+                    hairdresser: hairdresser,
+                    durationMinutes: selectedDuration
                 )
             }
             

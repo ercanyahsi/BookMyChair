@@ -148,6 +148,21 @@ struct ReservationEditorView: View {
                         }
                         .font(.title3.monospacedDigit())
                     }
+                    
+                    HStack {
+                        Text(NSLocalizedString("duration", comment: ""))
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                        
+                        Picker("", selection: $viewModel.selectedDuration) {
+                            ForEach(viewModel.availableDurations, id: \.minutes) { duration in
+                                Text(duration.label).tag(duration.minutes)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .labelsHidden()
+                    }
                 } header: {
                     Text(NSLocalizedString("Appointment Time", comment: ""))
                 }
