@@ -123,8 +123,9 @@ struct ReservationEditorView: View {
                     HStack {
                         Text(NSLocalizedString("select_time", comment: ""))
                             .foregroundColor(.primary)
+                            .layoutPriority(1)
                         
-                        Spacer()
+                        Spacer(minLength: 8)
                         
                         HStack(spacing: 4) {
                             Picker("", selection: $viewModel.selectedHour) {
@@ -134,6 +135,7 @@ struct ReservationEditorView: View {
                             }
                             .pickerStyle(.menu)
                             .labelsHidden()
+                            .fixedSize()
                             
                             Text(":")
                                 .foregroundColor(.secondary)
@@ -145,8 +147,10 @@ struct ReservationEditorView: View {
                             }
                             .pickerStyle(.menu)
                             .labelsHidden()
+                            .fixedSize()
                         }
                         .font(.title3.monospacedDigit())
+                        .fixedSize()
                     }
                     
                     HStack {
